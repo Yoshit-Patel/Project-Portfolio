@@ -1,0 +1,261 @@
+<!--/*
+Goal:
+To test your frontend coding skills with a simple but realistic objective.
+
+Objective:
+A set of responsive elements with hover and click events similar to what you'll find on many projects.
+
+Note: Jquery is already added. You can hit the settings button/icon to add any other libraries you want to use though we think jQuery should be more than enough or may even be too much for this test.
+
+Instructions:
+Write all your HTML/CSS/JS in this codepen. We should be able to see the results below.
+
+The content area should always be centered on screen.
+Create five elements in a row
+Put a text header inside each element, and an image below it.
+The elements should be wrapped in a parent element and expand to a maximum of 1000 pixels wide. Below that each element should be responsive down to 150px wide at which point the elements should wrap, but remain centered in their rows.
+Give each element a different animation on hover (you decide what it should do, but take into account user experience).
+On clicking an element, that element should pop up on top of the rest of the page. A faded background overlayed on top of the rest of the page, with the clicked element centered on screen at a max width of 600px or screen width.
+When you click the background the image should go back to its original position.
+This should be responsive between 1000px and 320px.
+
+On completion, email us the link to your work.
+Provide us the following information:
+- Time taken (honor system here)
+- Thoughts on the test (too hard, too easy, what do you think of it's complexity, if anything, what would you do different and why, any additional comments)
+
+Things we're looking at:
+- HTML standards compliance and structure
+- CSS structure
+- Javascript/jQuery setup and structure
+- Responsiveness
+- User experience
+
+Thank you for taking this test. We appreciate the effort.
+
+*/-->
+
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+</head>
+<style>
+#content {
+/*  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 75px;*/
+}
+
+.block {
+  float: left;
+  width: 20%;
+}
+
+.transition-expand {
+  transform: scale(1.6);
+}
+
+.expand {
+  transition: all .4s ease-in-out;
+}
+
+@media screen and (max-width: 150px) {
+  .block {
+    width: 100%;
+  }
+}
+
+@media (max-width:700px) and (min-width:465px) {
+  .block {
+    width: 33%;
+  }
+}
+
+@media (max-width:465px) and (min-width:150px) {
+  .block {
+    width: 50%;
+  }
+}
+
+/* Outer */
+.popup {
+    width:100%;
+    height:100%;
+    display:none;
+    position:fixed;
+    top:0px;
+    left:0px;
+    background:rgba(0,0,0,0.75);
+}
+
+/* Inner */
+.popup-inner {
+    max-width:600px;
+    width:90%;
+    padding:20px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    -webkit-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);
+    box-shadow:0px 2px 6px rgba(0,0,0,1);
+    border-radius:3px;
+    background:#fff;
+    text-align: center;
+}
+
+.popup-image {
+  width: 400px;
+}
+
+/* Close Button */
+.popup-close {
+    width:30px;
+    height:30px;
+    padding-top:4px;
+    display:inline-block;
+    position:absolute;
+    top:0px;
+    right:0px;
+    transition:ease 0.25s all;
+    -webkit-transform:translate(50%, -50%);
+    transform:translate(50%, -50%);
+    border-radius:1000px;
+    background:rgba(0,0,0,0.8);
+    font-family:Arial, Sans-Serif;
+    font-size:20px;
+    text-align:center;
+    line-height:100%;
+    color:#fff;
+}
+
+.popup-close:hover {
+    -webkit-transform:translate(50%, -50%) rotate(180deg);
+    transform:translate(50%, -50%) rotate(180deg);
+    background:rgba(0,0,0,1);
+    text-decoration:none;
+}
+
+</style>
+<body>
+<div id="content">
+
+<div class="popup" data-popup="image-popup">
+    <div class="popup-inner">
+        <a class="popup-close" data-popup-close="image-popup" href="#">x</a>
+    </div>
+ </div>
+ <div class="row">
+   <div id="row1" class="block">
+     <a class="openPopup" data-popup-open="image-popup" href="#" data-image="https://placekitten.com/g/150/200">
+       <h4>Garfield</h4>
+       <img class="toggle" src="https://placekitten.com/g/150/200" alt="Garfield the cat">
+     </a>
+   </div>
+  <div id="row2" class="block">
+    <a class="openPopup" data-popup-open="image-popup" href="#" data-image="https://placekitten.com/150/200">
+    <h4>Tigger</h4>
+    <img class="expand" src="https://placekitten.com/150/200" alt="Tiggerthe cat">
+    </a>
+  </div>
+  <div id="row3" class="block">
+    <a class="openPopup" data-popup-open="image-popup" href="#" data-image="https://placekitten.com/150/200?image=5">
+    <h4>Shadow</h4>
+    <img class="faded" src="https://placekitten.com/150/200?image=5" alt="Shadow the kitten">
+    </a>
+  </div>
+  <div id="row4" class="block">
+    <a class="openPopup" data-popup-open="image-popup" href="#" data-image="https://placekitten.com/150/200?image=6">
+    <h4>Smokey</h4>
+    <img class="moved" src="https://placekitten.com/150/200?image=6" alt="Smokey the kitten">
+    </a>
+  </div>
+  <div id="row5" class="block">
+    <a class="openPopup" data-popup-open="image-popup" href="#" data-image="https://placekitten.com/150/200?image=2">
+    <h4>Luna</h4>
+    <img class="spread" src="https://placekitten.com/150/200?image=2" alt="Luna the kitten">
+    </a>
+  </div>
+</div>
+<script>
+//animation and event for Garfield #1
+$(document).ready(function(){
+    $("#row1").hover(function(){
+        $(".toggle").stop(true, false).animate({
+            height: 'toggle'
+        });
+    });
+});
+
+//animation and event for Tigger #2
+$(document).ready(function() {
+  $('.expand').hover(function() {
+    $(".expand").addClass('transition-expand');
+
+  }, function() {
+    $(".expand").removeClass('transition-expand');
+  });
+});
+
+//animation and event for Shadow #3
+$(document).ready(function(){
+    $("#row3").mouseenter(function(){
+        $(".faded").animate({ opacity: '0.4' });
+    });
+  $("#row3").mouseleave(function(){
+        $(".faded").animate({ opacity: '1' });
+    });
+});
+
+//animation and event for Smokey #4
+$(document).ready(function(){
+    $("#row4").mouseenter(function(){
+        $(".moved").animate({ padding: '60px' });
+    });
+  $("#row4").mouseleave(function(){
+        $(".moved").animate({ padding: '0' });
+    });
+});
+
+//animation and event for Luna #5
+$(document).ready(function(){
+    $("#row5").mouseenter(function(){
+        $(".spread").animate({ width: '200px' });
+    });
+  $("#row5").mouseleave(function(){
+        $(".spread").animate({ width: '150px' });
+    });
+});
+
+$(function() {
+    //----- Open
+    $('[data-popup-open]').on('click', function(e)  {
+        var targeted_popup_class = jQuery(this).attr('data-popup-open');
+        $('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
+        var data_image = jQuery(this).attr('data-image');
+        $('[data-popup="' + targeted_popup_class + '"] .popup-inner').append('<img class="popup-image" src="'+data_image+'" />');
+        e.preventDefault();
+    });
+
+    //----- Close
+    $('[data-popup-close]').on('click', function(e)  {
+        var targeted_popup_class = jQuery(this).attr('data-popup-close');
+        $('[data-popup="' + targeted_popup_class + '"]').fadeOut(350, function(){
+              $('[data-popup="' + targeted_popup_class + '"] .popup-inner img').remove();
+        });
+        e.preventDefault();
+    });
+
+    $("body").click(function(){
+      //$(".popup").fadeOut(350);
+      $('[data-popup-close]').click();
+    });
+
+    $(".block").click(function(e){
+      e.stopPropagation();
+    });
+
+});
+
+</script>
+</body>
