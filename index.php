@@ -6,7 +6,7 @@
 <?php include_once('db.php'); ?>
 <body>
 <div class="container">
-<h2><a href="index.php">Applied Imagination</a></h2>
+<h2><a href="index.php">Awesome image upload</a></h2>
 <div class="form-container">
 <form action="upload.php" method="post" enctype="multipart/form-data" class="form-upload">
     Upload Your Image :
